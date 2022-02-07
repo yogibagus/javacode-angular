@@ -18,6 +18,8 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
+    "@ckeditor/ckeditor5-angular": "^2.0.2",
+    "@ckeditor/ckeditor5-build-classic": "^32.0.0",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "angularx-social-login": "^4.0.1",
     "bootstrap": "^5.1.3",

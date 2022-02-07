@@ -16,6 +16,7 @@ import { VoucherComponent } from './pages/settings/voucher/voucher.component';
 import { UserComponent } from './pages/auth/user/user.component';
 import { HakAksesComponent } from './pages/auth/hak-akses/hak-akses.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    CKEditorModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

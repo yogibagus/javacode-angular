@@ -33,6 +33,27 @@ export class TemplateComponent implements OnInit {
     this.router.navigateByUrl('/user');
   }
 
+  goSettingMenu() {
+    this.router.navigateByUrl('/user');
+  }
+
+  goSettingCustomer() {
+    this.router.navigateByUrl('/customer');
+  }
+
+  goSettingPromo() {
+    this.router.navigateByUrl('/promo');
+  }
+
+  goSettingDiskon() {
+    this.router.navigateByUrl('/diskon');
+  }
+
+  goSettingVoucher() {
+    this.router.navigateByUrl('/voucher');
+  }
+
+
   alertToast(icon: string, title: string) {
     const Toast = Swal.mixin({
       toast: true,
