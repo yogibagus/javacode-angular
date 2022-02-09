@@ -16,29 +16,58 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card dashboard">
+                        <form *ngIf="isAdd == true" [formGroup]="menuForm" class="form-horizontal ng-untouched ng-pristine ng-invalid">
+                        <div class="card dashboard mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="text-capitalize fw-bold heading-judul text-white">{{isEdit == true ? 'Edit Menu' : 'Tambah Menu'}}</h3>
+                                    <div>
+                                        <button class="btn btn-light" *ngIf="isEdit == true" (click)="onResetForm()" type="submit"><i class="fa fa-plus"></i> Tambah Menu</button>
+                                        <span class="text-primary"> - </span>
+                                        <button type="button" class="btn btn-danger" (click)="onClose()">X</button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="row mt-2">
                                     <div class="col-6">
                                         <div class="p-2" style="/*padding-bottom: 10px!important;*/">
-                                            <form class="form-horizontal ng-untouched ng-pristine ng-invalid">
-                                                <div class="form-group mb-3"><label class="form-label f-label" for="email">Nama</label><input class="form-control ng-pristine ng-invalid ng-touched" type="text" id="nama" name="nama" placeholder="Nama"></div>
+                                                <div class="form-group mb-3"><label class="form-label f-label" for="email">Nama</label>
+                                                    <input class="form-control ng-pristine ng-invalid ng-touched" type="text" formControlName="nama" placeholder="Nama">
+                                                </div>
                                                 <div class="form-group mb-3"><label class="form-label f-label" for="email">Kategori</label>
                                                     <div class="input-group">
                                                         <div class="input-group-text" style="padding: 0px;">
-                                                            <div class="btn-group" role="group"><button class="btn btn-primary filter active" type="button">Food</button><button class="btn btn-primary filter" type="button">Drink</button><button class="btn btn-primary filter" type="button">Snack</button></div>
+                                                             <div class="input-group">
+                                                                <div class="btn-group" role="group">
+                                                                    <input type="radio" class="btn-check" name="kategori" value="1" id="food" autocomplete="off"
+                                                                    formControlName="kategori" (change)="selected($event)" checked>
+                                                                    <label class="btn btn-primary filter" for="food">Food</label>
+
+                                                                    <input type="radio" class="btn-check" name="kategori" value="2" id="drink"
+                                                                    autocomplete="off" formControlName="kategori" (change)="selected($event)">
+                                                                    <label class="btn btn-primary filter" for="drink">Drink</label>
+
+                                                                    <input type="radio" class="btn-check" name="kategori" value="3" id="snack"
+                                                                    autocomplete="off" formControlName="kategori" (change)="selected($event)">
+                                                                    <label class="btn btn-primary filter" for="snack">Snack</label>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3"><label class="form-label f-label" for="email">Harga</label>
                                                     <div class="input-group input-group-sm">
-                                                        <div class="input-group-text -prepend"><span class="btn-show-pass" style="cursor: pointer;"><span>RP</span></span></div><input class="form-control" type="text" placeholder="20.000">
+                                                        <div class="input-group-text -prepend"><span class="btn-show-pass" style="cursor: pointer;"><span>RP</span></span></div>
+                                                        <input class="form-control" type="number" placeholder="Ex: 20000" formControlName="harga">
                                                     </div>
                                                 </div>
                                                 <div class="form-group mb-3"><label class="form-label text-capitalize f-label" for="email">Deskripsi singkat</label>
-                                                    <div class="input-group"><textarea class="form-control" style="min-height: 72px;"></textarea></div>
+                                                    <div class="input-group">
+                                                        <textarea class="form-control" formControlName="deskripsi" style="min-height: 72px;"></textarea>
+                                                    </div>
                                                 </div>
-                                            </form>
+                                            
                                         </div>
                                     </div>
                                     <div class="col-6" style="border-bottom-color: #2e2e2e;">
@@ -48,177 +77,88 @@
                                             </div>
                                         </div>
                                         <div class="container">
-                                            <div class="form-group mb-3" style="margin-top: 2.4rem;"><label class="form-label f-label" for="email">Status</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-text" style="padding: 0px;">
-                                                        <div class="btn-group" role="group"><button class="btn btn-primary text-capitalize filter2 active" type="button">ada</button><button class="btn btn-primary text-capitalize filter2" type="button">habis</button></div>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="form-group mb-3" style="margin-top: 2.4rem;">
+                                                    <label class="form-label f-label" for="email">Status</label>
+                                                    <div class="input-group">
+                                                        <input type="radio" class="btn-check" name="status" value="1" id="ada" autocomplete="off" formControlName="status" (change)="selected($event)" selected>
+                                                        <label class="btn btn-primary filter" for="ada">Ada</label>
+    
+                                                        <input type="radio" class="btn-check" name="status" value="0" id="habis" autocomplete="off" formControlName="status" (change)="selected($event)">
+                                                        <label class="btn btn-primary filter" for="habis">Habis</label>
                                                     </div>
                                                 </div>
+                                                 <div class="form-group mb-3" style="margin-top: 2.4rem;">
+                                                    <label class="form-label f-label" for="email">Topping</label>
+                                                    <div class="input-group">
+                                                        <button type="button" class="btn btn-primary">Add</button>
+                                                    </div>
+                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="table-responsive">
-                                            <table class="table table-striped table-hover table-borderless">
+                                            <table *ngIf="isEdit == true" class="table table-striped table-hover table-borderless">
                                                 <thead style="border-width: 1px;border-color: #dee2e6;background: #f5f5f5;">
                                                     <tr>
-                                                        <th style="width: 5%;text-align: center;/*border-right-style: solid;*/"><i class="fa fa-plus-square i-menu"></i></th>
-                                                        <th style="width: 30%;border-width: 0px;border-right-style: solid;">Keterangan</th>
-                                                        <th class="text-center" style="width: 40%;border-width: 0px;border-right-style: solid;">Type</th>
-                                                        <th class="text-end" style="/*border-right-style: solid;*/">Harga</th>
+                                                        <!-- <th style="width: 5%;text-align: center;/*border-right-style: solid;*/"><i class="fa fa-plus-square i-menu"></i></th> -->
+                                                        <th>No</th>
+                                                        <th>Keterangan</th>
+                                                        <th>Type</th>
+                                                        <th>Harga</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <th class="d-xxl-flex justify-content-xxl-center" style="text-align: center;"><i class="fa fa-minus-square i-menu"></i></th>
-                                                        <td class="text-start"><input class="bg-white border-light shadow-sm form-control" type="text" name="Keju" placeholder="Keju" style="width: 100%;"></td>
-                                                        <td class="text-center"><select class="type-menu">
-                                                                <optgroup label="This is a group">
-                                                                    <option value="12" selected="">Topping</option>
-                                                                    <option value="13">This is item 2</option>
-                                                                    <option value="14">This is item 3</option>
-                                                                </optgroup>
+                                                    <tr *ngFor="let data of listTopping; let i = index">
+                                                        <!-- <th class="d-xxl-flex justify-content-xxl-center" style="text-align: center;">
+                                                            <i class="fa fa-minus-square i-menu"></i>
+                                                        </th> -->
+                                                        <td>{{i+1}}</td>
+                                                        <td class="text-start">
+                                                            <input class="bg-white border-light shadow-sm form-control" type="text" placeholder="Nama Topping / Level" style="width: 100%;" value="{{data.keterangan}}">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="type-menu">
+                                                                <option value="topping" [selected]="data.type === 'topping'">Topping</option>
+                                                                <option value="level" [selected]="data.type === 'level'">Level</option>
                                                             </select></td>
-                                                        <td class="text-end d-lg-flex d-xl-flex d-xxl-flex justify-content-lg-end align-items-lg-center justify-content-xl-end align-items-xl-center justify-content-xxl-end align-items-xxl-center">2000</td>
+                                                        <td>
+                                                            <input class="bg-white border-light shadow-sm form-control" type="text" placeholder="Ex: 4000" style="width: 100%;" value="{{data.harga}}">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                                        </td>
                                                     </tr>
+
                                                     <tr>
-                                                        <td style="text-align: center;"><i class="fa fa-minus-square i-menu"></i></td>
-                                                        <td class="text-start"><input class="bg-white border-light shadow-sm form-control" type="text" name="Bakso" placeholder="Bakso" style="width: 100%;"></td>
-                                                        <td class="text-center"><select class="type-menu" style="width: 100%;">
-                                                                <optgroup label="This is a group">
-                                                                    <option value="12" selected="">Topping</option>
-                                                                    <option value="13">lorem</option>
-                                                                    <option value="14">lorem</option>
-                                                                </optgroup>
+                                                        <!-- <th class="d-xxl-flex justify-content-xxl-center" style="text-align: center;">
+                                                            <i class="fa fa-minus-square i-menu"></i>
+                                                        </th> -->
+                                                        <td></td>
+                                                        <td class="text-start">
+                                                            <input class="bg-white border-light shadow-sm form-control" type="text" placeholder="Keterangan Topping / Level" style="width: 100%;" value="">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <select class="type-menu">
+                                                                <option value="topping">Topping</option>
+                                                                <option value="level">Level</option>
                                                             </select></td>
-                                                        <td class="text-end d-lg-flex d-xl-flex justify-content-lg-end align-items-lg-center justify-content-xl-end align-items-xl-center">3000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align: center;"><i class="fa fa-minus-square i-menu"></i></td>
-                                                        <td class="text-start"><input class="bg-white border-light shadow-sm form-control" type="text" name="Level 1" placeholder="Level 1" style="width: 100%;"></td>
-                                                        <td class="text-center"><select class="type-menu" style="width: 100%;">
-                                                                <optgroup label="This is a group">
-                                                                    <option value="12" selected="">Level</option>
-                                                                    <option value="13">Lorem</option>
-                                                                    <option value="14">lorem</option>
-                                                                </optgroup>
-                                                            </select></td>
-                                                        <td class="text-end d-lg-flex d-xl-flex justify-content-lg-end align-items-lg-center justify-content-xl-end align-items-xl-center">1000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="text-align: center;"><i class="fa fa-minus-square i-menu"></i></th>
-                                                        <td class="text-start"><input class="bg-white border-light shadow-sm form-control" type="text" name="Keju" placeholder="Keju" style="width: 100%;"></td>
-                                                        <td class="text-center"><select class="type-menu">
-                                                                <optgroup label="This is a group">
-                                                                    <option value="12" selected="">Topping</option>
-                                                                    <option value="13">This is item 2</option>
-                                                                    <option value="14">This is item 3</option>
-                                                                </optgroup>
-                                                            </select></td>
-                                                        <td class="text-end d-lg-flex d-xl-flex justify-content-lg-end align-items-lg-center justify-content-xl-end align-items-xl-center">2000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align: center;"><i class="fa fa-minus-square i-menu"></i></td>
-                                                        <td class="text-start"><input class="bg-white border-light shadow-sm form-control" type="text" name="Bakso" placeholder="Bakso" style="width: 100%;"></td>
-                                                        <td class="text-center"><select class="type-menu" style="width: 100%;">
-                                                                <optgroup label="This is a group">
-                                                                    <option value="12" selected="">Topping</option>
-                                                                    <option value="13">lorem</option>
-                                                                    <option value="14">lorem</option>
-                                                                </optgroup>
-                                                            </select></td>
-                                                        <td class="text-end d-lg-flex d-xl-flex justify-content-lg-end align-items-lg-center justify-content-xl-end align-items-xl-center">3000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align: center;"><i class="fa fa-minus-square i-menu"></i></td>
-                                                        <td class="text-start"><input class="bg-white border-light shadow-sm form-control" type="text" name="Level 1" placeholder="Level 1" style="width: 100%;"></td>
-                                                        <td class="text-center"><select class="type-menu" style="width: 100%;">
-                                                                <optgroup label="This is a group">
-                                                                    <option value="12" selected="">Level</option>
-                                                                    <option value="13">Lorem</option>
-                                                                    <option value="14">lorem</option>
-                                                                </optgroup>
-                                                            </select></td>
-                                                        <td class="text-end d-lg-flex d-xl-flex justify-content-lg-end align-items-lg-center justify-content-xl-end align-items-xl-center">1000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="text-align: center;"><i class="fa fa-minus-square i-menu"></i></th>
-                                                        <td class="text-start"><input class="bg-white border-light shadow-sm form-control" type="text" name="Keju" placeholder="Keju" style="width: 100%;"></td>
-                                                        <td class="text-center"><select class="type-menu">
-                                                                <optgroup label="This is a group">
-                                                                    <option value="12" selected="">Topping</option>
-                                                                    <option value="13">This is item 2</option>
-                                                                    <option value="14">This is item 3</option>
-                                                                </optgroup>
-                                                            </select></td>
-                                                        <td class="text-end d-lg-flex d-xl-flex justify-content-lg-end align-items-lg-center justify-content-xl-end align-items-xl-center">2000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align: center;"><i class="fa fa-minus-square i-menu"></i></td>
-                                                        <td class="text-start"><input class="bg-white border-light shadow-sm form-control" type="text" name="Bakso" placeholder="Bakso" style="width: 100%;"></td>
-                                                        <td class="text-center"><select class="type-menu" style="width: 100%;">
-                                                                <optgroup label="This is a group">
-                                                                    <option value="12" selected="">Topping</option>
-                                                                    <option value="13">lorem</option>
-                                                                    <option value="14">lorem</option>
-                                                                </optgroup>
-                                                            </select></td>
-                                                        <td class="text-end d-lg-flex d-xl-flex justify-content-lg-end align-items-lg-center justify-content-xl-end align-items-xl-center">3000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align: center;"><i class="fa fa-minus-square i-menu"></i></td>
-                                                        <td class="text-start"><input class="bg-white border-light shadow-sm form-control" type="text" name="Level 1" placeholder="Level 1" style="width: 100%;"></td>
-                                                        <td class="text-center"><select class="type-menu" style="width: 100%;">
-                                                                <optgroup label="This is a group">
-                                                                    <option value="12" selected="">Level</option>
-                                                                    <option value="13">Lorem</option>
-                                                                    <option value="14">lorem</option>
-                                                                </optgroup>
-                                                            </select></td>
-                                                        <td class="text-end d-lg-flex d-xl-flex justify-content-lg-end align-items-lg-center justify-content-xl-end align-items-xl-center">1000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="text-align: center;"><i class="fa fa-minus-square i-menu"></i></th>
-                                                        <td class="text-start"><input class="bg-white border-light shadow-sm form-control" type="text" name="Keju" placeholder="Keju" style="width: 100%;"></td>
-                                                        <td class="text-center"><select class="type-menu">
-                                                                <optgroup label="This is a group">
-                                                                    <option value="12" selected="">Topping</option>
-                                                                    <option value="13">This is item 2</option>
-                                                                    <option value="14">This is item 3</option>
-                                                                </optgroup>
-                                                            </select></td>
-                                                        <td class="text-end d-lg-flex d-xl-flex justify-content-lg-end align-items-lg-center justify-content-xl-end align-items-xl-center">2000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align: center;"><i class="fa fa-minus-square i-menu"></i></td>
-                                                        <td class="text-start"><input class="bg-white border-light shadow-sm form-control" type="text" name="Bakso" placeholder="Bakso" style="width: 100%;"></td>
-                                                        <td class="text-center"><select class="type-menu" style="width: 100%;">
-                                                                <optgroup label="This is a group">
-                                                                    <option value="12" selected="">Topping</option>
-                                                                    <option value="13">lorem</option>
-                                                                    <option value="14">lorem</option>
-                                                                </optgroup>
-                                                            </select></td>
-                                                        <td class="text-end d-lg-flex d-xl-flex justify-content-lg-end align-items-lg-center justify-content-xl-end align-items-xl-center">3000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align: center;"><i class="fa fa-minus-square i-menu"></i></td>
-                                                        <td class="text-start"><input class="bg-white border-light shadow-sm form-control" type="text" name="Level 1" placeholder="Level 1" style="width: 100%;"></td>
-                                                        <td class="text-center"><select class="type-menu" style="width: 100%;">
-                                                                <optgroup label="This is a group">
-                                                                    <option value="12" selected="">Level</option>
-                                                                    <option value="13">Lorem</option>
-                                                                    <option value="14">lorem</option>
-                                                                </optgroup>
-                                                            </select></td>
-                                                        <td class="text-end d-lg-flex d-xl-flex justify-content-lg-end align-items-lg-center justify-content-xl-end align-items-xl-center">1000</td>
+                                                        <td>
+                                                            <input class="bg-white border-light shadow-sm form-control" type="text" placeholder="Ex: 4000" style="width: 100%;" value="">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-xs btn-primary"><i class="fa fa-save"></i></button>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-md-6 align-self-center">
                                         <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
                                     </div>
@@ -233,9 +173,57 @@
                                             </ul>
                                         </nav>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
-                            <div class="card-footer text-end"><button class="btn btn-primary btn-simpan" type="button">Simpan</button></div>
+                            <div class="card-footer text-end">
+                                <button class="btn btn-primary btn-simpan" *ngIf="isEdit == false" (click)="onSubmit()" type="submit">Simpan</button>
+                                <button class="btn btn-primary btn-simpan" *ngIf="isEdit == true" (click)="onUpdate()" type="submit">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-xl-12">
+                    <div class="card dashboard">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <h3 class="text-capitalize fw-bold m-0 heading-judul text-white">Daftar Menu</h3>
+                                <button class="btn btn-light" *ngIf="isAdd == false" (click)="onAddMenu()" type="button"><i class="fa fa-plus"></i> Tambah Menu</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Kategori</th>
+                                        <th>Harga</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of listMenu; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.nama}}</td>
+                                        <td>
+                                            <span class="badge bg-primary" *ngIf="data.kategori == 1">Food</span>
+                                             <span class="badge bg-primary" *ngIf="data.kategori == 2">Drink</span>
+                                              <span class="badge bg-primary" *ngIf="data.kategori == 3">Snack</span>
+                                        </td>
+                                        <td>Rp {{data.harga}}</td>
+                                        <td>
+                                             <span class="badge bg-success" *ngIf="data.status == 1">Ada</span>
+                                            <span class="badge bg-secondary" *ngIf="data.status == 0">Habis</span>
+                                        <td>
+                                            <button type="button" class="btn btn-xs btn-warning mr-2" (click)="edit(data.id_menu)"> <i class="fas fa-edit"></i></button> 
+                                            <span class="text-white"> - </span>
+                                            <button type="button" class="btn btn-xs btn-danger mr-2"><i class="fas fa-trash"></i></button> 
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

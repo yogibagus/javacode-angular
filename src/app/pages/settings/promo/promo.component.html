@@ -20,36 +20,74 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card dashboard">
+                        <form *ngIf="isAdd == true" [formGroup]="promoForm" class="form-horizontal ng-untouched ng-pristine ng-invalid">
+                        <div class="card dashboard mb-4">
+                            <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                               <h3 class="text-capitalize fw-bold heading-judul text-white">{{isEdit == true ? 'Edit Promo' : 'Tambah Promo'}}</h3>
+                                <div>
+                                    <button class="btn btn-light" *ngIf="isEdit == true" (click)="onResetForm()" type="submit"><i class="fa fa-plus"></i> Tambah Promo</button>
+                                    <span class="text-primary"> - </span>
+                                    <button type="button" class="btn btn-danger" (click)="onClose()">X</button>
+                                </div>
+                            </div>
+                            </div>
                             <div class="card-body">
                                 <div class="row mt-2">
                                     <div class="col-6">
                                         <div class="p-2" style="/*padding-bottom: 10px!important;*/">
-                                            <form class="form-horizontal ng-untouched ng-pristine ng-invalid">
-                                                <div class="form-group mb-3"><label class="form-label f-label" for="email">Nama</label><input class="form-control ng-pristine ng-invalid ng-touched" type="text" id="nama" name="nama" placeholder="Nama"></div>
+                                                <div class="form-group mb-3">
+                                                    <label class="form-label f-label" for="email">Nama</label>
+                                                    <input class="form-control ng-pristine ng-invalid ng-touched" type="text" formControlName="nama" placeholder="Nama">
+                                                </div>
                                                 <div class="form-group mb-3"><label class="form-label f-label" for="email">Type</label>
                                                     <div class="input-group">
                                                         <div class="input-group-text" style="padding: 0px;">
-                                                            <div class="btn-group" role="group"><button class="btn btn-primary filter active" type="button">Diskon</button><button class="btn btn-primary filter" type="button">Voucher</button></div>
+                                                             <div class="btn-group" role="group">
+                                                                    <input type="radio" class="btn-check" name="type" value="diskon" id="diskon" autocomplete="off"
+                                                                    formControlName="type" (change)="selected($event)" checked>
+                                                                    <label class="btn btn-primary filter" for="diskon">diskon</label>
+
+                                                                    <input type="radio" class="btn-check" name="type" value="promo" id="promo"
+                                                                    autocomplete="off" formControlName="type" (change)="selected($event)">
+                                                                    <label class="btn btn-primary filter" for="promo">promo</label>
+                                                                </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group mb-3"><label class="form-label f-label" for="email">Diskon</label>
-                                                    <div class="input-group"><input class="form-control" type="text" placeholder="10%"></div>
-                                                </div>
-                                                <div class="form-group mb-3"><label class="form-label f-label" for="email">Harga</label>
+                                                <div class="form-group mb-3" *ngIf="isDiskon == true">
+                                                    <label class="form-label f-label" for="email">Diskon</label>
                                                     <div class="input-group input-group-sm">
-                                                        <div class="input-group-text -prepend"><span class="btn-show-pass" style="cursor: pointer;"><span>RP</span></span></div><input class="form-control" type="text" placeholder="20.000">
+                                                        <div class="input-group-text -prepend">
+                                                            <span class="btn-show-pass" style="cursor: pointer;"><span>%</span>
+                                                        </span>
+                                                    </div>
+                                                    <input formControlName="nominal" class="form-control" type="text" placeholder="10%">
                                                     </div>
                                                 </div>
-                                                <div class="form-group mb-3"><label class="form-label f-label" for="email">Kadaluarsa</label><select class="form-select form-control" style="max-width: 17%;">
-                                                        <optgroup label="This is a group">
-                                                            <option value="12" selected="">1 day</option>
-                                                            <option value="13">This is item 2</option>
-                                                            <option value="14">This is item 3</option>
-                                                        </optgroup>
-                                                    </select></div>
-                                            </form>
+                                                <div class="form-group mb-3" *ngIf="isDiskon == false">
+                                                    <label class="form-label f-label" for="email">Potongan Harga</label>
+                                                    <div class="input-group input-group-sm">
+                                                        <div class="input-group-text -prepend">
+                                                            <span class="btn-show-pass" style="cursor: pointer;"><span>RP</span>
+                                                        </span>
+                                                    </div>
+                                                    <input formControlName="nominal" class="form-control" type="text" placeholder="20.000">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-3"><label class="form-label f-label" for="email">Kadaluarsa</label>
+                                                    <select class="form-select form-control" formControlName="kadaluarsa" style="max-width: 17%;">
+                                                            <option value="1" selected>1 day</option>
+                                                            <option value="2">2 day</option>
+                                                            <option value="3">3 day</option>
+                                                            <option value="4">4 day</option>
+                                                            <option value="5">5 day</option>
+                                                            <option value="6">6 day</option>
+                                                            <option value="7">7 day</option>
+                                                            <option value="8">8 day</option>
+                                                            <option value="9">9 day</option>
+                                                    </select>
+                                                </div>
                                         </div>
                                     </div>
                                     <div class="col-6" style="border-bottom-color: #2e2e2e;">
@@ -64,14 +102,63 @@
                                         <hr>
                                         <div class="syarat">
                                             <h3 class="text-center heading-terms mb-3">Terms &amp; Conditions<br></h3>
-                                         <ckeditor [editor]="Editor" [config]="config" data="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis fuga cum corporis! Magni sapiente voluptatem tempore dolore optio voluptatibus voluptate praesentium dolorem nobis nihil error quam nemo explicabo ex ad voluptatum, ratione repellat deserunt culpa quidem expedita. Architecto dolore dolorem corporis quasi nobis beatae eveniet enim, repellat blanditiis perferendis laborum tempore, tempora omnis tenetur eaque veritatis vel debitis vero provident illo. At nesciunt voluptate eaque quisquam blanditiis eius corrupti. Vel provident nulla incidunt beatae minus perspiciatis odit, placeat ad, atque aperiam nemo laborum rerum, laudantium commodi facere eveniet sed. Distinctio adipisci quae eveniet repudiandae praesentium asperiores ipsa reprehenderit assumenda. Beatae."></ckeditor>
+                                         <ckeditor [editor]="Editor" [config]="config" data="" formControlName="syarat_ketentuan" value="" >tes123</ckeditor>
                                         </div>
                                         
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer text-end"><button class="btn btn-primary btn-simpan" type="button">Simpan</button></div>
+                            <div class="card-footer text-end">
+                                <button class="btn btn-primary btn-simpan" *ngIf="isEdit == false" (click)="onSubmit()" type="submit">Simpan</button>
+                                <button class="btn btn-primary btn-simpan" *ngIf="isEdit == true" (click)="onUpdate()" type="submit">Update</button>
+                            </div>
                         </div>
+                    </form>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="text-white">Daftar Promo</h4>
+                                    <button type="button" class="btn btn-xs btn-light" (click)="onAddPromo()"><i class="fa fa-plus"></i> Tambah Promo</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama</th>
+                                            <th>Type</th>
+                                            <th>Nominal</th>
+                                            <th>Kadaluarsa</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of promo; let i = index">
+                                            <td>{{i+1}}</td>
+                                            <td>{{data.nama}}</td>
+                                            <td>
+                                                <span class="badge bg-primary" *ngIf="data.type == 'diskon'">Diskon</span>
+                                                <span class="badge bg-info" *ngIf="data.type == 'voucher'">Voucher</span>
+                                            </td>
+                                            <td>
+                                                <span *ngIf="data.type == 'diskon'">{{data.nominal}}%</span>
+                                                <span *ngIf="data.type == 'voucher'">Rp {{data.nominal}}</span>
+                                            </td>
+                                            <td>{{data.kadaluarsa}} Day</td>
+                                            <td>
+                                                <button type="button" class="btn btn-xs btn-warning mr-2" (click)="edit(data.id_promo)"> <i class="fas fa-edit"></i></button> 
+                                                <span class="text-white"> - </span>
+                                                <button type="button" class="btn btn-xs btn-danger mr-2"><i class="fas fa-trash"></i></button> 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

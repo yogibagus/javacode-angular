@@ -34,7 +34,7 @@ export class TemplateComponent implements OnInit {
   }
 
   goSettingMenu() {
-    this.router.navigateByUrl('/user');
+    this.router.navigateByUrl('/menu');
   }
 
   goSettingCustomer() {
